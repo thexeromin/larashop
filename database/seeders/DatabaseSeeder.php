@@ -20,5 +20,7 @@ class DatabaseSeeder extends Seeder
                 ['type' => 1],
             ))
             ->create();
+
+        $this->call(ProductSeeder::class);
     }
 }
