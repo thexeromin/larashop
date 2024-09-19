@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -21,7 +22,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('product.create');
     }
 
     /**
@@ -29,7 +30,23 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => ['required','string'],
+            'description' => ['required','string'],
+            'image_file' => ['required', 'image'],
+            'stock' => ['required', 'numeric'],
+            'price' => ['required', 'numeric']
+        ]);
+
+        $cloudinaryImage = $request->file('image_file')->storeOnCloudinary('products');
+        $url = $cloudinaryImage->getSecurePath();
+
+        unset($data['image_file']);
+        Product::create(array_merge($data, [
+            'image_url' => $url,
+        ]));
+
+        return redirect()->route('product.create')->with('status', 'product-added');
     }
 
     /**
