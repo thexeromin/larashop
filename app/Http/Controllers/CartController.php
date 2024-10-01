@@ -38,7 +38,7 @@ class CartController extends Controller
             'user_id' => auth()->id(),
         ]));
 
-        return redirect()->route('product.index')->with('status', 'cart-added');
+        return redirect()->route('cart.index')->with('status', 'cart-added');
     }
 
     /**
@@ -70,6 +70,8 @@ class CartController extends Controller
      */
     public function destroy(Cart $cart)
     {
-        //
+        $cart->delete();
+
+        return redirect()->route('cart.index')->with('status', 'cart-deleted');
     }
 }

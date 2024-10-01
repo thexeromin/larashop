@@ -26,13 +26,19 @@
                             </div>
                             <!-- Quantity and Price -->
                             <div class="mt-4 sm:mt-0 sm:flex items-center">
-                                <!-- <div class="flex items-center space-x-2">
-                                    <button class="px-2 py-1 bg-gray-200 rounded">-</button>
-                                    <input type="text" value="1"
-                                        class="w-10 text-center border border-gray-300 rounded">
-                                    <button class="px-2 py-1 bg-gray-200 rounded">+</button>
-                                </div> -->
                                 <p class="ml-6 text-xl font-medium">${{ $item->product->price }}</p>
+
+                                <div class="flex items-center space-x-2 ml-5">
+                                    <form action="{{ route('cart.destroy', $item) }}" method="POST" id="cart_destroy_form">
+                                        @csrf
+                                        @method('DELETE')
+                                        <i 
+                                            class="fa-solid fa-xmark cursor-pointer"
+                                            onclick="document.getElementById('cart_destroy_form').submit();"
+                                        >
+                                        </i>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                         @endforeach
@@ -41,7 +47,7 @@
 
                     <!-- Cart Summary -->
                     <div class="mt-6 flex justify-between items-center">
-                        <p class="text-lg font-medium">Total: $55.00</p>
+                        <p class="text-lg font-medium">$ {{ $cart_items->reduce(function($c, $item) { return $c + $item->product->price; }) ?? 0 }}</p>
                         <button class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Checkout</button>
                     </div>
 
