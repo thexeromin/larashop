@@ -18,10 +18,10 @@ class ProductFactory extends Factory
     {
         static $product_no = 1;
         $image_urls = [
-            "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-            "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-02.jpg",
-            "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-03.jpg",
-            "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-04.jpg",
+            "https://res.cloudinary.com/dat1zs2bh/image/upload/v1727921251/products/zy2ngeiekdx4kqfrsta1.jpg",
+            "https://res.cloudinary.com/dat1zs2bh/image/upload/v1727921251/products/b1cbjhye0jsz0qzpdrfm.jpg",
+            "https://res.cloudinary.com/dat1zs2bh/image/upload/v1727921251/products/qo7qw318xedqnnxo1cbm.jpg",
+            "https://res.cloudinary.com/dat1zs2bh/image/upload/v1727921251/products/uvkw4hf77dc5zuyf5amm.jpg",
         ];
 
         return [
