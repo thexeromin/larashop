@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,5 +22,8 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('product', ProductController::class);
 Route::resource('cart', CartController::class);
+
+Route::post('/payment-intent', [PaymentController::class, 'createIntent'])->name('paymentIntent.create');
+Route::get('/checkout/{token}', [PaymentController::class, 'checkoutView'])->name('checkout.index');
 
 require __DIR__.'/auth.php';
