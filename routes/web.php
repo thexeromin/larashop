@@ -25,5 +25,6 @@ Route::resource('cart', CartController::class);
 
 Route::post('/payment-intent', [PaymentController::class, 'createIntent'])->name('paymentIntent.create');
 Route::get('/checkout/{token}', [PaymentController::class, 'checkoutView'])->name('checkout.index');
+Route::get('/complete', [PaymentController::class, 'complete'])->name('complete.index');
 
 require __DIR__.'/auth.php';

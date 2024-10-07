@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -14,8 +15,15 @@ class PaymentController extends Controller
     public function createIntent(Request $request)
     {        
         $data = $request->validate([
-            'amount' => ['required', 'numeric']
+            'amount' => ['required', 'numeric'],
+            'cart_data' => ['required', 'string'],
         ]);
+
+        $cartIdArray = explode(',', $data['cart_data']);
+        $cartIntIdArray = array_map('intval', $cartIdArray);
+
+        // delete cart items
+        Cart::destroy($cartIntIdArray);
 
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
 
@@ -45,5 +53,10 @@ class PaymentController extends Controller
             'checkout.index',
             ['token' => $paymentIntent->client_secret]
         );
+    }
+
+    public function complete()
+    {
+        return view('complete');
     }
 }

@@ -11,6 +11,11 @@
             <div class="bg-white">
                 <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
 
+                    @if(count($cart_items) === 0)
+                    <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50" role="alert">
+                        <span class="font-medium">Oops!</span> You haven't added any products to your cart.
+                    </div>
+                    @else
                     <div class="flex flex-col space-y-4">
 
                         @foreach ($cart_items as $item)
@@ -47,6 +52,8 @@
                         <form method="post" action="{{ route('paymentIntent.create') }}"
                             class="mt-6 flex justify-between items-center">
                             @csrf
+                            <input type="hidden" name="cart_data"
+                                value="{{ collect($cart_items)->pluck('id')->implode(',') }}">
                             <input type="hidden" name="amount" type="number" value="{{ $cart_items->reduce(function($c, $item) { return $c +
                                 $item->product->price; }) ?? 0 }}">
                             <p class="text-lg font-medium">$ {{ $cart_items->reduce(function($c, $item) { return $c +
@@ -55,6 +62,7 @@
                                 class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">Checkout</button>
                         </form>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>
