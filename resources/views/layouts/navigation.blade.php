@@ -16,6 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    @if(Auth::user()->type === 0)
                     <x-nav-link :href="route('product.index')" :active="request()->routeIs('product.index')">
                         {{ __('Explore') }}
                     </x-nav-link>
@@ -23,10 +24,13 @@
                     <x-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.index')">
                         {{ __('Cart') }}
                     </x-nav-link>
+                    @endif
 
+                    @if(Auth::user()->type > 0)
                     <x-nav-link :href="route('product.create')" :active="request()->routeIs('product.create')">
                         {{ __('Add Product') }}
                     </x-nav-link>
+                    @endif
                 </div>
             </div>
 

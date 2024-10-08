@@ -4,10 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class ProductController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('admin-auth', only: ['create', 'store']),
+            new Middleware('auth', only: ['index']),
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
